@@ -1,0 +1,83 @@
+application: skibuyerspick
+version: 1
+runtime: php
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /stylesheets
+  static_dir: stylesheets
+- url: /phpinfopage
+  script: phpinfopage.php  
+- url: /formtest
+  script: formtest.php
+- url: /dbConn
+  script: dbConn.php
+- url: /validationtest
+  script: validation-test.php
+- url: /fileupload
+  script: fileupload.php  
+- url: /database
+  script: database.php  
+- url: /saveuser
+  script: saveUser.php
+- url: /senduserdata
+  script: sendUserData.php
+- url: /verification/.*
+  script: verification.php
+- url: /savesecuritypin
+  script: saveSecurityPin.php
+- url: /userstatus
+  script: userStatus.php   
+- url: /mailsecurepin
+  script: mailSecurePin.php
+- url: /forgotpassemail
+  script: forgotpassemail.php
+- url: /reset/.*
+  script: reset.php
+- url: /resetpassword
+  script: resetpassword.php
+- url: /sendnewpassword
+  script: sendnewpassword.php
+- url: /resendactivation
+  script: resendActivation.php
+- url: /usersnotification
+  script: index.php
+- url: /verificationcodeverify
+  script: verificationcodeverify.php
+- url: /uploadtest
+  script: upload_test.php
+- url: /registergcm
+  script: register.php
+- url: /config
+  script: config.php
+- url: /dbconnect
+  script: db_connect.php
+- url: /dbfunctions
+  script: db_functions.php
+- url: /gcm
+  script: GCM.php
+- url: /sendmessage
+  script: send_message.php
+- url: /getindustryattribute
+  script: get_industry_attributes.php
+- url: /getindustry
+  script: get_industry.php
+- url: /getattribute
+  script: get_attribute.php    
+- url: /privacy
+  script: privacy_policy.php
+- url: /savevendor
+  script: save_vendor.php
+- url: /savevendorcontact
+  script: save_vendor_contact.php
+- url: /savecontent
+  script: save_content.php
+- url: /saveattribute
+  script: save_attribute.php                                                          
+- url: .*
+  script: main.php
