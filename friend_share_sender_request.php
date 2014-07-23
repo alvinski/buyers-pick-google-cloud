@@ -43,6 +43,9 @@ foreach($json as $values)
 	foreach($values["receiver_email_ids"] as $key_email=>$val_email)
 	{
 		$receiver_email = $val_email["email"];
+		
+		$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
+		$inserted_id = mysql_insert_id();
 		foreach($values["item_id"] as $key_id=>$val_id)
 		{
 			//echo $val_id["id"]."<br>";
@@ -64,8 +67,7 @@ foreach($json as $values)
 		/******** SENDING email to receiver **************/
 		if($item_type == 1)
 		{
-			$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
-			$inserted_id = mysql_insert_id();
+			
 			/******* Retrieving vendor master data from tbl_vendor_master *****/
 			$sql_v_mas = mysql_query("select * from ba_tbl_vendor_master where id = '$item_id' and is_deleted = '0'");
 			$row_v_mas = mysql_fetch_assoc($sql_v_mas);
