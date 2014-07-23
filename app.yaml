@@ -116,6 +116,8 @@ handlers:
 - url: /friendsharesenderrequest
   script: friend_share_sender_request.php
 - url: /friendsharestatus
-  script: friendshare_status.php                                                                              
+  script: friendshare_status.php
+- url: /usercheck
+  script: user_check.php                                                                                 
 - url: .*
   script: main.php

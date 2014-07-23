@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+<head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript">
 /*
@@ -14,16 +17,113 @@ $(document).ready(function(){
 <script type="text/javascript">
 $(document).ready(function(){
 	$('#resetForm').submit(function(event){
+		event.preventDefault();
+		$("#passwordError").html("");
+		$("#cpasswordError").html("");
 		var count = $('#password').val().length;
 		var count_c = $('#c_password').val().length;
-		if(count<6 || count_c<6)
+		var password = $('#password').val();
+		var c_password = $('#c_password').val();
+		if(count<6)
 		{
-			alert('Please specify a password of Minimum 6 alphanumeric characters...');
+			//alert('Please specify a password of Minimum 6 alphanumeric characters...');
+			$("#passwordError").html("Minimum 6 characters required!!");
 			return false;
 		}
+		if(count_c<6)
+		{
+			$("#cpasswordError").html("Minimum 6 characters required!!");
+			return false;
+		}
+		if(password != c_password)
+		{
+			$('#cpasswordError').html("Password does not match");
+			return false;
+		}
+		$.post("http://skibuyerspick.appspot.com/resetpassword", $("#resetForm").serialize(), function(data){
+			//alert(data);
+			if(data=="2")
+			{
+				$('#result').html('Password Reset Not Successful. Please Try Again.');
+			}
+			else if(data=="1")
+			{
+				$('#result').html('<p style="color:green;">Password Reset Successful</p>');
+			}
+		})
 	});
 });
 </script>
+<style>
+body{
+	background-color:#e9e9e9;
+	font-family:Helvetica Neue;
+}
+#result, #passwordError, #cpasswordError{
+	color:red;
+}
+.wrapper{
+	
+	margin:0px auto;
+	position:relative;
+	padding:20px;
+}
+
+.resetBox{
+	background-color:white;
+	width:400px;
+	height:auto;
+	border:0;
+	margin:0px auto;
+	position:relative;
+	padding:20px;
+	-webkit-box-shadow:  0px 0px 2px 2px rgba(0,0,0,0.2);
+	box-shadow:  0px 0px 2px 2px rgba(0,0,0,0.2);
+	border-radius:8px;
+	
+}
+.inputBox{
+width: 90%;
+padding: 12px 12px 12px 12px;
+border: 0;
+-webkit-box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.2);
+box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.2);
+margin-top: 15px;
+color: #8f8f8f;
+font-size: 14px;
+border-radius:5px;
+}
+.resetBtn{
+	background: url(http://www.buyerspicks.com/images/updatepass.png) center center no-repeat;
+	width: 103px;
+	height: 35px;
+	border: 0;
+	background-color: transparent;
+	
+}
+.socialMedia
+{
+	width:400px;
+	margin:0px auto;
+	color:grey;
+	font-family:Helvetica Neue;
+}
+	
+@media screen and (max-width: 480px) {
+	.inputBox{
+	width: 90%;
+	}
+	.resetBox{
+		width:90%;
+	}
+	.socialMedia
+	{
+		width:90%;
+	}
+}
+</style>
+</head>
+<body>
 <?php
 /******** Google App Engine Mail API includes below ***********/
 require_once 'google/appengine/api/mail/Message.php';
@@ -36,39 +136,62 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!="")
 	$email = base64_decode($_REQUEST['id']);
 	$verification_key = $_REQUEST['r'];
 	
-	$sqlSelect  = mysql_query("select email, verification_key from ba_tbl_user where email = '$email'");
+	$sqlSelect  = mysql_query("select email, verification_key, profile_image from ba_tbl_user where email = '$email'");
 	$rowSelect = mysql_fetch_assoc($sqlSelect);
 	$numRows = mysql_num_rows($sqlSelect);
 	$verification_key = $rowSelect['verification_key'];
+	$profile_image = $rowSelect["profile_image"];
 	if($numRows>0)   /*** Showing password reset form if info from query string is valid  ***/
 	{	
 		?>
+		<div class="wrapper">
 		<form action="http://skibuyerspick.appspot.com/resetpassword" id="resetForm" method="post">
-		<table cellpadding="10" cellspacing="10" border="0">
-		<tr>
-			<td>	
-		 	New Password :
-			</td>
-			<td> <input type="password" name="password" id="password" /></td>
-		</tr>
-		<tr>
-			<td>
-			Confirm Password : 
-			</td>
-			<td>
-			<input type="password" name="c_password" id="c_password" />
-			</td>
-		</tr>
+		
+		
+			<p><center><img src="http://www.buyerspicks.com/images/logo.jpg" width="206" height="154" alt="" border="0" /></center></p>
+			<p><center style="color:grey;">Reset your password</center></p>
+		
+		<div class="resetBox">		
+		<p>
+			<?
+			if($profile_image!="" || !empty($profile_image))
+			{
+				?>
+				<center><img src="<?php echo $profile_image; ?>" /></center>
+				<?
+			}
+			else
+			{
+			?>
+			<center><img src="http://www.buyerspicks.com/images/profile.png" /></center>
+			<?
+			}	
+			?>
+			</p>
+		 	<p>
+		
+	<input type="password" name="password" id="password" class="inputBox" placeholder="New Password" /></p>
+		 <div id="passwordError"></div>
+			<p>
+		 
+			<input type="password" name="c_password" id="c_password" class="inputBox" placeholder="Confirm New Password" /></p>
+	<div id="cpasswordError"></div>
 		<input type="hidden" name="email" id="email" value="<?php echo $email; ?>" />
-		<tr>
-			<td>
-				<input type="submit" name="submit" id="submit"  value="Update" />
-			</td>
-		</tr>
-		</table>	
-			
+	
+			<p><center><input type="submit" name="submit" id="submit" class="resetBtn" value /></center></p>
+		<p><center><div id="result"></div>	</center></p>
+		</div>	
+	
+		
 		</form><br>
-		<div id="result"></div>	
+        <div class="socialMedia"><center><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="#"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="#"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="#"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;</center>
+		
+		<p><center>&copy; Copyright Buyers Pic(k)'s <?php echo date("Y");?></center></p>
+		</div>
+		</div>
 		<?
 	}
 	else
@@ -81,3 +204,5 @@ else
 	echo '[{"response":"no email"}]';
 }
 ?>
+</body>
+</html>

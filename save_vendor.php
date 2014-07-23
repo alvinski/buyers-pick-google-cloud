@@ -136,6 +136,7 @@
 					{
 						$public_url_back = "http://apps.medialabs24x7.com/buyerspick/vendor/".$path."/".$gs_name_back;
 					}
+					$sync_timestamp = date("Y-d-m h:i:s");
 					$sqlInsert = mysql_query("insert into ba_tbl_vendor_master values('$empty_id', '$vendor_name', '$user_id', '$tags', '$description', '$path', '$created_date', '$security_pin', '$old_security_pin', '$last_modified_security_pin', '$geo_latitude', '$geo_longitude', '$last_modified_date', '$is_deleted', '$delete_date', '$industry_id', '$current_location', '$v_front_local', '$v_back_local', '$public_url_front', '$public_url_back', '$vendor_title', '$sync_status', '$update_status', '$sync_timestamp')") or die(mysql_error());
 					/***** Checking if vendor is inserted ******/
 					$inserted_id = mysql_insert_id();
@@ -164,6 +165,7 @@
 		}
 		else
 		{
+			$sync_timestamp = date("Y-d-m h:i:s");
 			$sqlInsert = mysql_query("insert into ba_tbl_vendor_master values('$empty_id', '$vendor_name', '$user_id', '$tags', '$description', '$path', '$created_date', '$security_pin', '$old_security_pin', '$last_modified_security_pin', '$geo_latitude', '$geo_longitude', '$last_modified_date', '$is_deleted', '$delete_date', '$industry_id', '$current_location', '$v_front_local', '$v_back_local', '$public_url_front', '$public_url_back', '$vendor_title', '$sync_status', '$update_status', '$sync_timestamp')") or die(mysql_error());
 			/***** Checking if vendor is inserted ******/
 			$inserted_id = mysql_insert_id();

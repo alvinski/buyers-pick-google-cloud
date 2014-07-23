@@ -42,13 +42,12 @@ foreach($json as $values)
 	
 	foreach($values["receiver_email_ids"] as $key_email=>$val_email)
 	{
-		$receiver_email = $val_email["email"];
 		foreach($values["item_id"] as $key_id=>$val_id)
 		{
-			//echo $val_id["id"]."<br>";
-			$item_id = $val_id["id"];
+				//echo $val_id["id"]."<br>";
+				$item_id = $val_id["id"];
 		//echo $val_email["email"]."<br>";
-		
+		$receiver_email = $val_email["email"];
 		/********* Getting receivers information using emai id of the receiver. *****/
 		$sqlReceiver = mysql_query("select f_name, l_name from ba_tbl_user where email = '$receiver_email'");
 		$rowReceiver = mysql_fetch_assoc($sqlReceiver);
@@ -56,8 +55,8 @@ foreach($json as $values)
 		$l_name = $rowReceiver["l_name"];
 		/****** END *****/
 		
-		//checking if item_id, sender_email and receiver_email already exits...
-		$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and sender_email = '$sender_email' and receiver_email = '$receiver_email'");
+		//checking if item_id and receiver_email already exits...
+		$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and receiver_email = '$receiver_email'");
 		$num_check = mysql_num_rows($sqlCheck);
 		if($num_check == 0)
 		{
@@ -422,19 +421,19 @@ foreach($json as $values)
 				                        <td align="left" valign="top">
 				                           <table align="left" width="202" border="0" cellspacing="0" cellpadding="0"  class="responsive-table">
 				                              <tr>
-				                                <td align="center"><a href="http://www.buyerspicks.com/support.html"><img src="http://www.buyerspicks.com/images/get_support.jpg" width="202" height="63" alt="" border="0"/></a></td>
+				                                <td align="center"><a href="#"><img src="http://www.buyerspicks.com/images/get_support.jpg" width="202" height="63" alt="" border="0"/></a></td>
 				                              </tr>
 				                            </table>
                             
 				                            <table align="left" width="223" border="0" cellspacing="0" cellpadding="0"  class="responsive-table">
 				                              <tr>
-				                                <td align="center"><a href="http://www.buyerspicks.com/download.html"><img src="http://www.buyerspicks.com/images/download_app.jpg" width="223" height="63" alt="" border="0" /></a></td>
+				                                <td align="center"><a href="#"><img src="http://www.buyerspicks.com/images/download_app.jpg" width="223" height="63" alt="" border="0" /></a></td>
 				                              </tr>
 				                            </table>
                             
 				                            <table align="left" width="223" border="0" cellspacing="0" cellpadding="0"  class="responsive-table">
 				                              <tr>
-				                                <td align="center"><a href="http://www.buyerspicks.com/upgrade.html"><img src="http://www.buyerspicks.com/images/app_upgrad.jpg" width="223" height="63" alt="" border="0" /></a></td>
+				                                <td align="center"><a href="#"><img src="http://www.buyerspicks.com/images/app_upgrad.jpg" width="223" height="63" alt="" border="0" /></a></td>
 				                              </tr>
 				                            </table>
                             
@@ -460,9 +459,9 @@ foreach($json as $values)
 				                            <table align="right" width="140" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:35px;">
 				                              <tr>
 				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
-				                                <td><a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
-				                                <td><a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
-				                                <td><a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
+				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
+				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
+				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
 				                              </tr>
 				                            </table>
                             
@@ -511,7 +510,22 @@ foreach($json as $values)
 				*/
 			//$message_body .= "http://skibuyerspick.appspot.com/reset/?id=".base64_encode($email)."&r=$verification_key";
 
-			
+			$mail_options = [
+			"sender" => "support@skiusainc.com",
+			"to" => $receiver_email,
+			"subject" => "Buyers Pick Shared Information",
+			"htmlBody" => $message_body
+			];
+
+			try {
+			$message = new Message($mail_options);
+			$message->send();
+			unset($content_name);
+				//echo '[{"response":"success"}]';
+			} catch (InvalidArgumentException $e) {
+			//echo $e; 
+				//echo '[{"response":"Mail not sent!!"}]';
+			}
 			
 		}
 		else
@@ -876,19 +890,19 @@ foreach($json as $values)
  				                        <td align="left" valign="top">
  				                           <table align="left" width="202" border="0" cellspacing="0" cellpadding="0"  class="responsive-table">
  				                              <tr>
- 				                                <td align="center"><a href="http://www.buyerspicks.com/support.html"><img src="http://www.buyerspicks.com/images/get_support.jpg" width="202" height="63" alt="" border="0"/></a></td>
+ 				                                <td align="center"><a href="#"><img src="http://www.buyerspicks.com/images/get_support.jpg" width="202" height="63" alt="" border="0"/></a></td>
  				                              </tr>
  				                            </table>
                             
  				                            <table align="left" width="223" border="0" cellspacing="0" cellpadding="0"  class="responsive-table">
  				                              <tr>
- 				                                <td align="center"><a href="http://www.buyerspicks.com/download.html"><img src="http://www.buyerspicks.com/images/download_app.jpg" width="223" height="63" alt="" border="0" /></a></td>
+ 				                                <td align="center"><a href="#"><img src="http://www.buyerspicks.com/images/download_app.jpg" width="223" height="63" alt="" border="0" /></a></td>
  				                              </tr>
  				                            </table>
                             
  				                            <table align="left" width="223" border="0" cellspacing="0" cellpadding="0"  class="responsive-table">
  				                              <tr>
- 				                                <td align="center"><a href="http://www.buyerspicks.com/upgrade.html"><img src="http://www.buyerspicks.com/images/app_upgrad.jpg" width="223" height="63" alt="" border="0" /></a></td>
+ 				                                <td align="center"><a href="#"><img src="http://www.buyerspicks.com/images/app_upgrad.jpg" width="223" height="63" alt="" border="0" /></a></td>
  				                              </tr>
  				                            </table>
                             
@@ -913,10 +927,10 @@ foreach($json as $values)
                             
  				                            <table align="right" width="140" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:35px;">
  				                              <tr>
-			                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
-			                                <td><a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
-			                                <td><a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
-			                                <td><a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
+ 				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
+ 				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
+ 				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
+ 				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
  				                              </tr>
  				                            </table>
                             
@@ -966,29 +980,10 @@ foreach($json as $values)
 		}
 	 }
 		
+	}
 	
 }
 
-/******* SENDING Single/Multiple vendor/content email ******/
-
-$mail_options = [
-"sender" => "support@skiusainc.com",
-"to" => $receiver_email,
-"subject" => "Buyers Pick Shared Information",
-"htmlBody" => $message_body
-];
-
-try {
-$message = new Message($mail_options);
-$message->send();
-unset($content_name);
-	//echo '[{"response":"success"}]';
-} catch (InvalidArgumentException $e) {
-//echo $e; 
-	//echo '[{"response":"Mail not sent!!"}]';
-}
-
-/************* END  *************/
 
 if($arr_friend_share==null)
 {

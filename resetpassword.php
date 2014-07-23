@@ -41,16 +41,16 @@ if(isset($_POST['email']) || $_POST['email']!="" || $_POST['password']!="" || $_
 			try {
 				$message = new Message($mail_options);
 				$message->send();
-				echo 'Email Sent.<br>';
+				//echo 'Email Sent.<br>';
 			} catch (InvalidArgumentException $e) {
 				//echo $e; 
-				echo 'Email Not Sent.<br>';
+				//echo 'Email Not Sent.';
 			}
-			echo "Password Reset Successful.<br>";
+			echo "1";
 		}
 		else
 		{
-			echo "Password Reset Not Successful.Please Try Again.<br>";
+			echo "2";
 			
 		}
 		//END
