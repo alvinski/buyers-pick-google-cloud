@@ -33,6 +33,7 @@ if(isset($_REQUEST['user_id']) && $_REQUEST['user_id']!="")
 	$contact_no = $_POST['contact_no'];
 	$dob = $_POST['dob'];
 	
+	
 	$gs_file = $_FILES["uploaded_files"]["tmp_name"];
 	$gs_name = $_FILES["uploaded_files"]['name'];
 	$gs_size = $_FILES["uploaded_files"]['size'];

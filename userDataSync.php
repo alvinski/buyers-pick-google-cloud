@@ -40,9 +40,10 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 	$gender = $rowSelect['gender'];
 	$dob = $rowSelect['dob'];
 	$profile_image = $rowSelect['profile_image'];
+	$sync_setting = $rowSelect['sync_setting'];
 
 	
-	$arr_user_details[] = array("id"=>$user_master_id, "email"=>$email, "password"=>$password, "f_name"=>$f_name, "l_name"=>$l_name, "device"=>$device, "last_login"=>$last_login, "active"=>$active, "created_date"=>$created_date, "verification_key"=>$verification_key, "active_date"=>$active_date, "old_password"=>$old_password, "last_modified"=>$last_modified, "created_by"=>$created_by, "subscription_type"=>$subscription_type, "user_type"=>$user_type, "security_pin"=>$security_pin, "password_mod"=>$password_mod, "user_space_used"=>$user_space_used, "gender"=>$gender, "contact_no"=>$contact_no, "dob"=>$dob, "profile_image"=>$profile_image);
+	$arr_user_details[] = array("id"=>$user_master_id, "email"=>$email, "password"=>$password, "f_name"=>$f_name, "l_name"=>$l_name, "device"=>$device, "last_login"=>$last_login, "active"=>$active, "created_date"=>$created_date, "verification_key"=>$verification_key, "active_date"=>$active_date, "old_password"=>$old_password, "last_modified"=>$last_modified, "created_by"=>$created_by, "subscription_type"=>$subscription_type, "user_type"=>$user_type, "security_pin"=>$security_pin, "password_mod"=>$password_mod, "user_space_used"=>$user_space_used, "gender"=>$gender, "contact_no"=>$contact_no, "dob"=>$dob, "profile_image"=>$profile_image, "sync_setting"=>$sync_setting);
 	
 	/************ END ***********/
 	
@@ -129,7 +130,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 		 
 		 $content_master_id[] = array("id"=>$id);
 		 
-		 $arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color);
+		 $arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name);
 	 }
     }
 	/*********************** END *******************************/

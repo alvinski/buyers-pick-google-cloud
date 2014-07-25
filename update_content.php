@@ -107,17 +107,18 @@ if(move_uploaded_file($gs_file, "vendor/".$cloud_path."/".$gs_name))
 	$type = $_POST['type'];
 	$type = $_POST['type'];
 	$content_color = $_POST['content_color'];
+	$display_content_name = $_POST["display_content_name"];
 	$sync_status = 1;
 	$update_status = 0;
 
-	$sqlInsert = mysql_query("update ba_tbl_content set content_name = '$content_name', vendor_id = '$vendor_id', tags = '$tags', title = '$title', content_size = '$content_size', description = '$description', website = '$website', created_date = '$created_date', update_date = '$update_date', is_deleted = '$is_deleted', delete_date = '$delete_date', path = '$path', sync_status = '$sync_status', industry_id = '$industry_id', type = '$type', cloud_path = '$cloud_path', public_url = '$public_url', update_status = '$update_status', content_color = '$content_color' where id = '$id'") or die(mysql_error());
+	$sqlInsert = mysql_query("update ba_tbl_content set content_name = '$content_name', vendor_id = '$vendor_id', tags = '$tags', title = '$title', content_size = '$content_size', description = '$description', website = '$website', created_date = '$created_date', update_date = '$update_date', is_deleted = '$is_deleted', delete_date = '$delete_date', path = '$path', sync_status = '$sync_status', industry_id = '$industry_id', type = '$type', cloud_path = '$cloud_path', public_url = '$public_url', update_status = '$update_status', content_color = '$content_color', display_content_name = '$display_content_name' where id = '$id'") or die(mysql_error());
 
 	if(mysql_affected_rows()==1)
 	{
 		$sqlSelect = mysql_query("select * from ba_tbl_content where id = '$id'");
 		$rowSelect = mysql_fetch_assoc($sqlSelect);
 		extract($rowSelect);
-		$vendor_arr[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "sync_status"=> $sync_status, "industry_id"=>$industry_id, "type"=>$type, 'cloud_path'=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color);
+		$vendor_arr[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "sync_status"=> $sync_status, "industry_id"=>$industry_id, "type"=>$type, 'cloud_path'=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name);
 		
 		$arr_pass[] = array("response"=>"pass");
 		$data["error"] = $arr_pass;

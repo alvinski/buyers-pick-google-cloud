@@ -8,8 +8,10 @@ include_once('database.php');
 $json = json_decode($_REQUEST['friend_share'], true);
 
 $arr_pass[] = array("response"=>"pass");
+$arr_fail[] = array("response"=>"fail");
 $arr_nouser[] = array("response"=>"no_user");
 $arr_nopost[] = array("response"=>"nopost");
+
 //print_r($json);
 
 //print_r($json);
@@ -43,9 +45,7 @@ foreach($json as $values)
 	foreach($values["receiver_email_ids"] as $key_email=>$val_email)
 	{
 		$receiver_email = $val_email["email"];
-		
-		$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
-		$inserted_id = mysql_insert_id();
+		//echo "RECEIVERS EMAIL : " . $receiver_email."<br>";
 		foreach($values["item_id"] as $key_id=>$val_id)
 		{
 			//echo $val_id["id"]."<br>";
@@ -60,14 +60,16 @@ foreach($json as $values)
 		/****** END *****/
 		
 		//checking if item_id, sender_email and receiver_email already exits...
-		$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and sender_email = '$sender_email' and receiver_email = '$receiver_email'");
+		//$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and sender_email = '$sender_email' and receiver_email = '$receiver_email'");
+		$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and receiver_email = '$receiver_email'");
 		$num_check = mysql_num_rows($sqlCheck);
 		if($num_check == 0)
 		{
 		/******** SENDING email to receiver **************/
 		if($item_type == 1)
 		{
-			
+			$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
+			$inserted_id = mysql_insert_id();
 			/******* Retrieving vendor master data from tbl_vendor_master *****/
 			$sql_v_mas = mysql_query("select * from ba_tbl_vendor_master where id = '$item_id' and is_deleted = '0'");
 			$row_v_mas = mysql_fetch_assoc($sql_v_mas);
@@ -936,7 +938,7 @@ foreach($json as $values)
  				</body>
  				</html>
  				';
-			 
+			/* 
 			$mail_options = [
 			"sender" => "support@skiusainc.com",
 			"to" => $receiver_email,
@@ -952,6 +954,7 @@ foreach($json as $values)
 			//echo $e; 
 				//echo '[{"response":"Mail not sent!!"}]';
 			}
+			*/
 		}
 		
 		/*************** END ***************************/
@@ -964,33 +967,41 @@ foreach($json as $values)
 		//$arr_friend_share[] = array("old_id"=>$old_id[$key_id],"id"=>$id, "sender_email"=>$sender_email, "receiver_email"=>$receiver_email, "item_id"=>$item_id, "share_permission"=>$share_permission, "delete_permission"=>$delete_permission, "sync_status"=>$sync_status, "is_deleted"=>$is_deleted, "update_status"=>$update_status, "status"=>$status);
 		$arr_friend_share[] = array("id"=>$id, "sender_email"=>$sender_email, "receiver_email"=>$receiver_email, "item_id"=>$item_id, "share_permission"=>$share_permission, "delete_permission"=>$delete_permission, "sync_status"=>$sync_status, "is_deleted"=>$is_deleted, "update_status"=>$update_status, "status"=>$status, "item_type"=>$item_type);
 		}
+		else
+		{
+			$arr_already_shared[] = array("response"=>"Vendor already shared with this user");
+			$data["error"] = $arr_fail;
+			$data["share_status"] = $arr_already_shared;
+			//$json = json_encode($data);
+			//print_r($json);
+			//exit();
+		}
 		
 		}
-	 }
-		
-	
-}
+		/******* SENDING Single/Multiple vendor/content email ******/
 
-/******* SENDING Single/Multiple vendor/content email ******/
+		$mail_options = [
+		"sender" => "support@skiusainc.com",
+		"to" => $receiver_email,
+		"subject" => "Buyers Pick Shared Information",
+		"htmlBody" => $message_body
+		];
 
-$mail_options = [
-"sender" => "support@skiusainc.com",
-"to" => $receiver_email,
-"subject" => "Buyers Pick Shared Information",
-"htmlBody" => $message_body
-];
+		try {
+		$message = new Message($mail_options);
+		$message->send();
+		unset($content_name);
+			//echo '[{"response":"success"}]';
+		} catch (InvalidArgumentException $e) {
+		//echo $e; 
+			//echo '[{"response":"Mail not sent!!"}]';
+		}
 
-try {
-$message = new Message($mail_options);
-$message->send();
-unset($content_name);
-	//echo '[{"response":"success"}]';
-} catch (InvalidArgumentException $e) {
-//echo $e; 
-	//echo '[{"response":"Mail not sent!!"}]';
-}
+		/************* END  *************/
+	}
+ }
 
-/************* END  *************/
+
 
 if($arr_friend_share==null)
 {

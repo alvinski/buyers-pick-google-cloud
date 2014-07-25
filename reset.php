@@ -157,7 +157,7 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!="")
 			if($profile_image!="" || !empty($profile_image))
 			{
 				?>
-				<center><img src="<?php echo $profile_image; ?>" /></center>
+				<center><img src="<?php echo $profile_image; ?>" width="133" height="133" style="border-radius:100px; -webkit-border-radius: 100px; -moz-border-radius: 100px;" /></center>
 				<?
 			}
 			else

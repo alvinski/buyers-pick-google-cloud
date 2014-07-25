@@ -118,6 +118,10 @@ handlers:
 - url: /friendsharestatus
   script: friendshare_status.php
 - url: /usercheck
-  script: user_check.php                                                                                 
+  script: user_check.php 
+- url: /savesyncsetting
+  script: save_sync_setting.php
 - url: .*
+  script: main.php
+: .*
   script: main.php
