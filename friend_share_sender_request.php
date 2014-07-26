@@ -112,6 +112,16 @@ foreach($json as $values)
    			 while($rowContent = mysql_fetch_assoc($sqlContent))
    			 {
 		 		$content_name[] = $rowContent["content_name"];
+				/*
+				$tag_explode[] = explode(",", $rowContent["tags"]);
+				foreach($tag_explode as $key_tag=>$new_tag)
+				{
+					$full_tag[] = explode("~", $new_tag);
+					$finaltag = implode(" ", $full_tag[1]);
+					
+				}
+				$tags[] = $finaltag;
+				*/
 				$tags = $rowContent["tags"];
 				$storage_path[] = $rowContent["storage_path"];
 				$content_color[] = $rowContent["content_color"];

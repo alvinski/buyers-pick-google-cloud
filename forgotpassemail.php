@@ -239,7 +239,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 			                      </tr>
 			                      <tr>
 			                        <td style="font-family:Helvetica, Arial, sans-serif; color:#424242; font-size:15px; padding: 15px 0 5px 40px;">
-			                        	<a href="http://skibuyerspick.appspot.com/reset/?id='.base64_encode($email).'&r='.$verification_key.'">Reset Password</a>
+			                        	<a href="http://skibuyerspick.appspot.com/reset/?id='.base64_encode($email).'&r='.$verification_key.'" style="color:red; text-decoration:none;">Reset Password</a>
 			                        </td>
 			                      </tr>
                       

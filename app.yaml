@@ -55,18 +55,6 @@ handlers:
   script: verificationcodeverify.php
 - url: /uploadtest
   script: upload_test.php
-- url: /registergcm
-  script: register.php
-- url: /config
-  script: config.php
-- url: /dbconnect
-  script: db_connect.php
-- url: /dbfunctions
-  script: db_functions.php
-- url: /gcm
-  script: GCM.php
-- url: /sendmessage
-  script: send_message.php
 - url: /getindustryattribute
   script: get_industry_attributes.php
 - url: /getindustry
@@ -119,6 +107,11 @@ handlers:
   script: friendshare_status.php
 - url: /usercheck
   script: user_check.php 
+- url: /savesyncsetting
+  script: save_sync_setting.php
+- url: .*
+  script: main.php
+ script: user_check.php 
 - url: /savesyncsetting
   script: save_sync_setting.php
 - url: .*

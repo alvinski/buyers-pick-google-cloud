@@ -177,11 +177,12 @@
 	}
 	else
 	{
-		$arr_pass[] = array("response"=>"no space", "file_size"=>"'.$gs_size.'");
+		$arr_pass[] = array("response"=>"no space", "file_size"=>"$gs_size");
 		$data["error"] = $arr_pass;
 		$json = json_encode($data);
 		print_r($json);
 		//echo '[{"response":"no space"}]';
 	}
 	}
+?>}
 ?>

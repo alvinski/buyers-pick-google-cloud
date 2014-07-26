@@ -266,7 +266,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
                       
 			                      <tr>
 			                        <td style="font-family:Helvetica, Arial, sans-serif; color:#424242; font-size:15px; padding: 15px 0 5px 40px;">
-			                        	<a href="http://skibuyerspick.appspot.com/verification/?q='.$verification_key.'" style="color:#1f6082; text-decoration:none;">Activate Account</a>
+			                        	<a href="http://skibuyerspick.appspot.com/verification/?q='.$verification_key.'" style="color:red; text-decoration:none;">Activate Account</a>
 			                        </td>
 			                      </tr>
                       
@@ -413,5 +413,7 @@ else
 {
 	echo '[{"response":"noREQUEST"}]';
 }
+
+?>
 
 ?>

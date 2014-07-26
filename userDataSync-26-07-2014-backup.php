@@ -6,25 +6,16 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 	
 	$email = $_REQUEST['email'];
 	$password = $_REQUEST['password'];
-	$sqlSelect = mysql_query("select * from ba_tbl_user where email = '$email'");
+	$sqlSelect = mysql_query("select * from ba_tbl_user where email = '$email' and password = '$password'");
 	$rowSelect = mysql_fetch_assoc($sqlSelect);
 	$num_row = mysql_num_rows($sqlSelect);
 	
 	$arr_pass[] = array("response"=>"pass");
-	$arr_nouser[] = array("response"=>"Email Id not found!!");
-	$arr_nopass[] = array("response"=>"Incorrect Password!!");
+	$arr_nouser[] = array("response"=>"no_user");
 	$arr_nopost[] = array("response"=>"nopost");
 	
 	if($num_row>0)
 	{
-		//checking if password is correct
-		$sqlPassword = mysql_query("select * from ba_tbl_user where email = '$email' and password = '$password'");
-		$rowPassword = mysql_fetch_assoc($sqlPassword);
-		$numPassword = mysql_num_rows($sqlPassword);
-		
-		if($numPassword > 0)
-		{
-		
 	/****** getting tbl_user *******/	
 	$user_master_id = $rowSelect['id'];
 	$email = $rowSelect['email'];
@@ -575,13 +566,6 @@ while($rowAttr = mysql_fetch_assoc($sqlAttr))
 
 	$final_data = json_encode($data);
 	print_r($final_data);
-		}
-		else
-		{
-			$data["error"] = $arr_nopass;
-			$final_data = json_encode($data);
-			print_r($final_data);
-		}
 	
 	}
 	else
