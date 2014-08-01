@@ -111,9 +111,7 @@ handlers:
   script: save_sync_setting.php
 - url: /updatecontenttagdisplayname
   script: update_content_tag_displayname.php
+- url: /gcs_upload_test
+  script: gcs_upload_test.php
 - url: .*
-  script: main.php
-- url: .*
-  script: main.php
-: .*
   script: main.php

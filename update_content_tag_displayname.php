@@ -5,11 +5,11 @@ use google\appengine\api\mail\Message;
 /*** END ****/
 include_once('database.php');
 
-$id = $_POST['id'];
-$path = $_POST['path'];
-$user_id = $_POST['user_id'];
-$tags = $_POST['tags'];
-$display_content_name = $_POST["display_content_name"];
+$id = $_REQUEST['id'];
+$path = $_REQUEST['path'];
+$user_id = $_REQUEST['user_id'];
+$tags = $_REQUEST['tags'];
+$display_content_name = $_REQUEST["display_content_name"];
 $sync_status = 1;
 $update_status = 1;
 

@@ -5,7 +5,7 @@ use google\appengine\api\mail\Message;
 /*** END ****/
 include_once('database.php');
 
-$json = json_decode($_REQUEST['friend_share'], true);
+$json = json_decode($_REQUEST['friend_share'], true); //getting json array from mobile device and converting it to an array.
 
 $arr_pass[] = array("response"=>"pass");
 $arr_fail[] = array("response"=>"fail");
@@ -16,7 +16,7 @@ $arr_nopost[] = array("response"=>"nopost");
 
 //print_r($json);
 
-foreach($json as $values)
+foreach($json as $values) //looping through the converted array.
 {
 	//$old_id = $values["id"];
 	//echo "<pre>";
@@ -33,7 +33,7 @@ foreach($json as $values)
 	$s_f_name = $rowSender["f_name"];
 	$s_l_name = $rowSender["l_name"];
 	$share_permission = $values['share_permission'];
-	//$delete_permission = $values['delete_permission'];
+	$delete_permission = $values['delete_permission'];
 	//$sync_status = $values['sync_status'];
 	$sync_status = 1;
 	$is_deleted = $values['is_deleted'];
@@ -72,7 +72,7 @@ foreach($json as $values)
 		/******** SENDING email to receiver **************/
 		if($item_type == 1)
 		{
-			$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
+			$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, delete_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$delete_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
 			$inserted_id = mysql_insert_id();
 			/******* Retrieving vendor master data from tbl_vendor_master *****/
 			$sql_v_mas = mysql_query("select * from ba_tbl_vendor_master where id = '$item_id' and is_deleted = '0'");
@@ -136,7 +136,10 @@ foreach($json as $values)
 				$storage_path[] = $rowContent["storage_path"];
 				$content_color[] = $rowContent["content_color"];
 				$content_type[] = $rowContent["type"];
+				$display_content_name[] = $rowContent["display_content_name"];
+				//echo "Content name : " . $rowContent["display_content_name"];
 			 }
+			 //print_r($display_content_name);
 			 /*
 			 echo "Tag Explode : <br>";
 			 print_r($tag_explode);
@@ -393,9 +396,18 @@ foreach($json as $values)
 								$message_body .= '
 				                        	<table align="left" width="301" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:25px;">
 				                              <tr>
-				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:15px 0px">
-				                                	File Name: <span style="color:#ce7e7e;">'.$content_display.'</span>
-				                                </td>
+				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:15px 0px">';
+												
+												if($display_content_name[$key_content]!="" && !empty($display_content_name[$key_content]))
+												{
+													$message_body .= 'Name: <span style="color:#ce7e7e;">'.$display_content_name[$key_content].'</span>';
+												}
+												else
+												{
+													$message_body .= 'Name: <span style="color:#ce7e7e;">'.$content_display.'</span>';
+												}
+				                                	
+				                          $message_body .= '</td>
 				                              </tr>
 				                              <tr>
 				                                <td align="left" valign="top">';
@@ -422,10 +434,7 @@ foreach($json as $values)
 				                                	Tags:  <span style="color:#6e9cbb">'.$tag[$key_content].'</span>
 				                                </td>
 				                              </tr>
-				                              <tr>
-				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:5px 0px 15px 0px">
-				                               	Color:  <span style="color:#6e9cbb"></span> '.$content_color[$key_content].'</td>
-				                              </tr>
+				                              
 				                            </table>
                             				';
 										}
@@ -567,10 +576,10 @@ foreach($json as $values)
 				$storage_path[] = $rowContent["storage_path"];
 				$content_color[] = $rowContent["content_color"];
 				$content_type[] = $rowContent["type"];
-				
+				$display_content_name[] = $rowContent["display_content_name"];
 				
 			 }
-			$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
+			$sql = mysql_query("insert into ba_tbl_friend_share (item_id, sender_email, receiver_email, share_permission, delete_permission, sync_status, is_deleted, update_status, status, item_type) values('$item_id', '$sender_email', '$receiver_email', '$share_permission', '$delete_permission', '$sync_status', '$is_deleted', '$update_status', '$status', '$item_type')") or die(mysql_error());
 			$inserted_id = mysql_insert_id();
 			
 			
@@ -848,9 +857,19 @@ foreach($json as $values)
  								$message_body .= '
  				                        	<table align="left" width="301" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:25px;">
  				                              <tr>
- 				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:15px 0px">
- 				                                	File Name: <span style="color:#ce7e7e;">'.$content_display.'</span>
- 				                                </td>
+ 				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:15px 0px">';
+												
+												if($display_content_name[$key_content]!="" or !empty($display_content_name[$key_content]))
+												{
+													$message_body .= 'Name: <span style="color:#ce7e7e;">'.$display_content_name[$key_content].'</span>';
+												}
+												else
+												{
+													$message_body .= 'Name: <span style="color:#ce7e7e;">'.$content_display.'</span>';
+												}
+				                                	
+				                          $message_body .= '</td>
+ 				                                
  				                              </tr>
  				                              <tr>
  				                                <td align="left" valign="top">';
@@ -877,10 +896,7 @@ foreach($json as $values)
  				                                	Tags:  <span style="color:#6e9cbb">'.$tag[$key_content].'</span>
  				                                </td>
  				                              </tr>
- 				                              <tr>
- 				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:5px 0px 15px 0px">
- 				                               	Color:  <span style="color:#6e9cbb"></span> '.$content_color[$key_content].'</td>
- 				                              </tr>
+ 				                              
  				                            </table>
                              				';
  										}

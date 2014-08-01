@@ -111,7 +111,7 @@ if(isset($_REQUEST['q']) && $_REQUEST['q']!="")
 		?>
 		
 		
-			<span class="success"><img src="http://www.buyerspicks.com/images/verification_fail.png" align="absmiddle" ></span><span class="message">VERIFICATION FAILED</span>
+			<span class="success"><img src="http://www.buyerspicks.com/images/verification_fail.png" align="absmiddle" ></span><span class="message">ERROR!!</span>
 	 
 		<?
 	}
@@ -140,4 +140,5 @@ else
 		<p><center>&copy; Copyright Buyers Pic(k)'s <?php echo date("Y");?></center></p>
 		</div>
 </body>
+</html>ody>
 </html>
