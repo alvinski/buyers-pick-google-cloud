@@ -45,7 +45,11 @@ foreach($json as $values)
 	foreach($values["receiver_email_ids"] as $key_email=>$val_email)
 	{
 		$receiver_email = $val_email["email"];
+		
 		//echo "RECEIVERS EMAIL : " . $receiver_email."<br>";
+		//chekcing if sender and receiver email ids are same. if same dont send friend share request
+		if($sender_email != $receiver_email)
+		{
 		foreach($values["item_id"] as $key_id=>$val_id)
 		{
 			//echo $val_id["id"]."<br>";
@@ -61,7 +65,7 @@ foreach($json as $values)
 		
 		//checking if item_id, sender_email and receiver_email already exits...
 		//$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and sender_email = '$sender_email' and receiver_email = '$receiver_email'");
-		$sqlCheck = mysql_query("select item_id, receiver_email from ba_tbl_friend_share where item_id = '$item_id' and receiver_email = '$receiver_email'");
+		$sqlCheck = mysql_query("select item_id, receiver_email, status from ba_tbl_friend_share where item_id = '$item_id' and receiver_email = '$receiver_email'");
 		$num_check = mysql_num_rows($sqlCheck);
 		if($num_check == 0)
 		{
@@ -116,18 +120,32 @@ foreach($json as $values)
 				$tag_explode[] = explode(",", $rowContent["tags"]);
 				foreach($tag_explode as $key_tag=>$new_tag)
 				{
-					$full_tag[] = explode("~", $new_tag);
-					$finaltag = implode(" ", $full_tag[1]);
+					$tags[] = str_replace("~","-", $new_tag);
 					
 				}
-				$tags[] = $finaltag;
+				/*
+				foreach($full_tag as $key_final=>$final_tag)
+				{
+					$finaltag[] = $final_tag;
+				}
 				*/
-				$tags = $rowContent["tags"];
+				
+				$tag[] = str_replace("~","-",$rowContent["tags"]);
+				
+				//$tags = $rowContent["tags"];
 				$storage_path[] = $rowContent["storage_path"];
 				$content_color[] = $rowContent["content_color"];
 				$content_type[] = $rowContent["type"];
-			 }	
-				
+			 }
+			 /*
+			 echo "Tag Explode : <br>";
+			 print_r($tag_explode);
+			 echo "FULL TAG : "."<br>";
+			 print_r($full_tag);
+			 echo "TAGs : <br>";
+			 print_r($tags);
+			 echo "FINAL TAG : " . $finaltag;	
+			*/	
    			 //$friend_arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color);
 			/****** END *******/
 			
@@ -401,7 +419,7 @@ foreach($json as $values)
 				                              </tr>
 				                              <tr>
 				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:15px 0px">
-				                                	Tags:  <span style="color:#6e9cbb">'.$tags[$key_content].'</span>
+				                                	Tags:  <span style="color:#6e9cbb">'.$tag[$key_content].'</span>
 				                                </td>
 				                              </tr>
 				                              <tr>
@@ -473,7 +491,7 @@ foreach($json as $values)
                             
 				                            <table align="right" width="140" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:35px;">
 				                              <tr>
-				                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
+				                                <td><a href="https://plus.google.com/u/0/b/115302655080223880566/115302655080223880566/"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
 				                                <td><a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
 				                                <td><a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
 				                                <td><a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
@@ -544,7 +562,8 @@ foreach($json as $values)
 				$content_type[] = $rowContent["type"];
 				*/
 		 		$content_name[] = $rowContent["content_name"];
-				$tags = $rowContent["tags"];
+				//$tags = $rowContent["tags"];
+				$tag[] = str_replace("~","-",$rowContent["tags"]);
 				$storage_path[] = $rowContent["storage_path"];
 				$content_color[] = $rowContent["content_color"];
 				$content_type[] = $rowContent["type"];
@@ -855,7 +874,7 @@ foreach($json as $values)
  				                              </tr>
  				                              <tr>
  				                                <td align="left" valign="top" style="font-family: Helvetica, Arial, sans-serif; font-size:12px; color:#576573; padding:15px 0px">
- 				                                	Tags:  <span style="color:#6e9cbb">'.$tags[$key_content].'</span>
+ 				                                	Tags:  <span style="color:#6e9cbb">'.$tag[$key_content].'</span>
  				                                </td>
  				                              </tr>
  				                              <tr>
@@ -927,7 +946,7 @@ foreach($json as $values)
                             
  				                            <table align="right" width="140" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:35px;">
  				                              <tr>
-			                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
+			                                <td><a href="https://plus.google.com/u/0/b/115302655080223880566/115302655080223880566/"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
 			                                <td><a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
 			                                <td><a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
 			                                <td><a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
@@ -979,7 +998,7 @@ foreach($json as $values)
 		}
 		else
 		{
-			$arr_already_shared[] = array("response"=>"Vendor already shared with this user");
+			$arr_already_shared[] = array("response"=>"Vendor already shared with ".$receiver_email);
 			$data["error"] = $arr_fail;
 			$data["share_status"] = $arr_already_shared;
 			//$json = json_encode($data);
@@ -1006,6 +1025,15 @@ foreach($json as $values)
 		//echo $e; 
 			//echo '[{"response":"Mail not sent!!"}]';
 		}
+		}
+		
+		else
+		{
+			$arr_already_shared[] = array("response"=>"Vendor cannot be shared with yourself");
+			$data["error"] = $arr_fail;
+			$data["share_status"] = $arr_already_shared;
+		}
+		
 
 		/************* END  *************/
 	}

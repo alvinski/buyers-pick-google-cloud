@@ -109,11 +109,10 @@ handlers:
   script: user_check.php 
 - url: /savesyncsetting
   script: save_sync_setting.php
+- url: /updatecontenttagdisplayname
+  script: update_content_tag_displayname.php
 - url: .*
   script: main.php
- script: user_check.php 
-- url: /savesyncsetting
-  script: save_sync_setting.php
 - url: .*
   script: main.php
 : .*

@@ -8,15 +8,19 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 {
 	
 	$email = $_REQUEST['email'];
+	$verification_key = $_REQUEST['verification_key'];
 	
-	$sqlSelect  = mysql_query("select f_name, l_name, email, verification_key from ba_tbl_user where email = '$email'");
+	$sqlSelect  = mysql_query("select f_name, l_name, email, active, verification_key from ba_tbl_user where email = '$email'");
 	$rowSelect = mysql_fetch_assoc($sqlSelect);
 	$numRows = mysql_num_rows($sqlSelect);
-	$verification_key = $rowSelect['verification_key'];
+	//$verification_key = $rowSelect['verification_key'];
 	$f_name = $rowSelect['f_name'];
 	$l_name = $rowSelect['l_name'];
-	if($numRows>0)
+	$active = $rowSelect["active"];
+	if($numRows > 0)
 	{	
+		if($active == 1)
+		{
 		
 		$message_body = '
 			<html>
@@ -239,7 +243,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 			                      </tr>
 			                      <tr>
 			                        <td style="font-family:Helvetica, Arial, sans-serif; color:#424242; font-size:15px; padding: 15px 0 5px 40px;">
-			                        	<a href="http://skibuyerspick.appspot.com/reset/?id='.base64_encode($email).'&r='.$verification_key.'" style="color:red; text-decoration:none;">Reset Password</a>
+			                        	<a href="http://skibuyerspick.appspot.com/reset/?id='.base64_encode($email).'&r='.$verification_key.'" style="color:red; text-decoration:none;"><img src="http://www.buyerspicks.com/images/resetpassword.png" border="0" /></a>
 			                        </td>
 			                      </tr>
                       
@@ -321,7 +325,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
                             
 			                            <table align="right" width="140" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:35px;">
 			                              <tr>
-		                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
+		                                <td><a href="https://plus.google.com/u/0/b/115302655080223880566/115302655080223880566/"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
 		                                <td><a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
 		                                <td><a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
 		                                <td><a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
@@ -356,14 +360,21 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 		try {
 			$message = new Message($mail_options);
 			$message->send();
+			$sqlUpdate = mysql_query("update ba_tbl_user set verification_key = '$verification_key' where email = '$email'");
 			echo '[{"response":"Password Reset link sent to Your email."}]';
 		} catch (InvalidArgumentException $e) {
 			//echo $e; 
 			echo '[{"response":"Mail not sent!!"}]';
 		}
+		}
+		else
+		{
+			echo '[{"response":"User not verified!!"}]';
+		}
 	}
 	else
 	{
+		
 		echo '[{"response":"User not registered!!"}]';
 	}
 }

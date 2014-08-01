@@ -109,7 +109,7 @@ if(move_uploaded_file($gs_file, "vendor/".$cloud_path."/".$gs_name))
 	$content_color = $_POST['content_color'];
 	$display_content_name = $_POST["display_content_name"];
 	$sync_status = 1;
-	$update_status = 0;
+	$update_status = 1;
 
 	$sqlInsert = mysql_query("update ba_tbl_content set content_name = '$content_name', vendor_id = '$vendor_id', tags = '$tags', title = '$title', content_size = '$content_size', description = '$description', website = '$website', created_date = '$created_date', update_date = '$update_date', is_deleted = '$is_deleted', delete_date = '$delete_date', path = '$path', sync_status = '$sync_status', industry_id = '$industry_id', type = '$type', cloud_path = '$cloud_path', public_url = '$public_url', update_status = '$update_status', content_color = '$content_color', display_content_name = '$display_content_name' where id = '$id'") or die(mysql_error());
 

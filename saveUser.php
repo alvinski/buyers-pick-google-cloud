@@ -266,7 +266,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
                       
 			                      <tr>
 			                        <td style="font-family:Helvetica, Arial, sans-serif; color:#424242; font-size:15px; padding: 15px 0 5px 40px;">
-			                        	<a href="http://skibuyerspick.appspot.com/verification/?q='.$verification_key.'" style="color:red; text-decoration:none;">Activate Account</a>
+			                        	<a href="http://skibuyerspick.appspot.com/verification/?q='.$verification_key.'" style="color:red; text-decoration:none;"><img src="http://www.buyerspicks.com/images/activebtn.png" border="0" /></a>
 			                        </td>
 			                      </tr>
                       
@@ -355,7 +355,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
                             
 			                            <table align="right" width="140" border="0" cellspacing="0" cellpadding="0"  class="responsive-table" style="padding-right:35px;">
 			                              <tr>
-  		                                <td><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
+  		                                <td><a href="https://plus.google.com/u/0/b/115302655080223880566/115302655080223880566/"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a></td>
   		                                <td><a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a></td>
   		                                <td><a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a></td>
   		                                <td><a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a></td>
@@ -413,7 +413,5 @@ else
 {
 	echo '[{"response":"noREQUEST"}]';
 }
-
-?>
 
 ?>

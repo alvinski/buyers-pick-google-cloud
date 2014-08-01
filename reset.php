@@ -136,7 +136,7 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!="")
 	$email = base64_decode($_REQUEST['id']);
 	$verification_key = $_REQUEST['r'];
 	
-	$sqlSelect  = mysql_query("select email, verification_key, profile_image from ba_tbl_user where email = '$email'");
+	$sqlSelect  = mysql_query("select email, verification_key, profile_image from ba_tbl_user where email = '$email' and verification_key = '$verification_key'");
 	$rowSelect = mysql_fetch_assoc($sqlSelect);
 	$numRows = mysql_num_rows($sqlSelect);
 	$verification_key = $rowSelect['verification_key'];
@@ -184,10 +184,10 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!="")
 	
 		
 		</form><br>
-        <div class="socialMedia"><center><a href="#"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
-        <a href="#"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
-        <a href="#"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
-        <a href="#"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;</center>
+        <div class="socialMedia"><center><a href="https://plus.google.com/u/0/b/115302655080223880566/115302655080223880566/"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;</center>
 		
 		<p><center>&copy; Copyright Buyers Pic(k)'s <?php echo date("Y");?></center></p>
 		</div>
@@ -196,7 +196,31 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!="")
 	}
 	else
 	{
-		echo '[{"response":"no matching email"}]';
+		?>
+		<div class="wrapper">
+
+			<p><center><img src="http://www.buyerspicks.com/images/logo.jpg" width="206" height="154" alt="" border="0" /></center></p>
+			<p><center style="color:grey;">Reset your password</center></p>
+		
+		<div class="resetBox">		
+		<p>
+			
+			<center><img src="http://www.buyerspicks.com/images/profile.png" /></center>
+		
+			</p>
+			<p><center class="socialMedia">Link has Expired!! Please try again.</center></p>
+		 	<p>
+		
+	
+        <div class="socialMedia"><center><a href="https://plus.google.com/u/0/b/115302655080223880566/115302655080223880566/"><img src="http://www.buyerspicks.com/images/gplus.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="https://www.facebook.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/fb.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="http://www.pinterest.com/Buyerspicks/"><img src="http://www.buyerspicks.com/images/pin.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;
+        <a href="https://twitter.com/BuyersPicks"><img src="http://www.buyerspicks.com/images/twt.jpg" width="15" height="17" alt="" border="0" /></a>&nbsp;</center>
+		
+		<p><center>&copy; Copyright Buyers Pic(k)'s <?php echo date("Y");?></center></p>
+		</div>
+		</div>
+		<?
 	}
 }
 else
