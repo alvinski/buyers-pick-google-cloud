@@ -405,7 +405,21 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 	}
 	else
 	{
-		echo '[{"response":"fail"}]';
+		$sqlSelect = mysql_query("select email from ba_tbl_user where email = '$email'");
+		$numrows = mysql_num_rows($sqlSelect);
+		$rowSelect = mysql_fetch_assoc($sqlSelect);
+		if($numrows==1)
+		{
+			$active = $rowSelect["active"];
+			if($active==0)
+			{
+				echo '[{"response":"fail1"}]'; //showing message to user when not verified. Message - 'verfication pending'
+			}
+			else
+			{
+				echo '[{"response":"fail2"}]'; // showing message to user when verified. Message - 'verification completed. proceed to login'.
+			}
+		}
 	}
 }
 

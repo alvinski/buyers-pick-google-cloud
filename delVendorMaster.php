@@ -5,7 +5,8 @@ foreach($json as $key=>$values)
 {
 
 	$id = $values['id'];
-	//$friend_share_del_flag = $values["friend_share_del_flag"];
+	$friend_share_del_flag = $values["friend_share_del_flag"];
+	$email = $values["email"];
 	/*
 	$vendor_name = $values['vendor_name'];
 	$vendor_title = $values['vendor_title'];
@@ -30,13 +31,14 @@ foreach($json as $key=>$values)
 		if(mysql_affected_rows()==1)
 		{
 			/***** Checking if delete from secondary user side ******/
-			//if($friend_share_del_flag==1)
-			//{
+			if($friend_share_del_flag==1)
+			{
 				/******* Updating is_deleted column from tbl_friend_share table *******/
-				$sqlDelFriendShare = mysql_query("update ba_tbl_friend_share set is_deleted = '1' where item_id = '$id'");
+				$sqlDelFriendShare = mysql_query("update ba_tbl_friend_share set is_deleted = '1' where item_id = '$id' and (sender_email = '$email' or receiver_email = '$email')");
 				/***************************** END ***********************************/
-		 	//}
-			/* 17/07/2014. Commented as vendor will now be deleted from all the tables.
+		 	}
+			/*** 17/07/2014. Commented as vendor will now be deleted from all the tables. ***/
+			/*
 			if($friend_share_del_flag==0)
 			{
 				/****** Selecting email_id of all receivers of the specific item_id *****

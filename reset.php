@@ -170,11 +170,11 @@ if(isset($_REQUEST['id']) && $_REQUEST['id']!="")
 			</p>
 		 	<p>
 		
-	<input type="password" name="password" id="password" class="inputBox" placeholder="New Password" /></p>
+	<input type="password" name="password" id="password" class="inputBox" placeholder="New Password" maxlength="25" /></p>
 		 <div id="passwordError"></div>
 			<p>
 		 
-			<input type="password" name="c_password" id="c_password" class="inputBox" placeholder="Confirm New Password" /></p>
+			<input type="password" name="c_password" id="c_password" class="inputBox" placeholder="Confirm New Password" maxlength="25" /></p>
 	<div id="cpasswordError"></div>
 		<input type="hidden" name="email" id="email" value="<?php echo $email; ?>" />
 	

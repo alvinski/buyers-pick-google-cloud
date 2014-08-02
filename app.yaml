@@ -113,5 +113,7 @@ handlers:
   script: update_content_tag_displayname.php
 - url: /gcs_upload_test
   script: gcs_upload_test.php
+- url: /deletesharedvendor
+  script: delete_shared_vendor.php  
 - url: .*
   script: main.php
