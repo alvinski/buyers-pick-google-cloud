@@ -105,7 +105,7 @@
 	<p>&nbsp;</p>
 	<div class="msgBox">
 
-<p><center> Welcome to Buyers Pick </center></p>        
+<p><center> Welcome to Buyers Pic(k)'s </center></p>        
 </div>
        
 </div>
