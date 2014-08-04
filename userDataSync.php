@@ -139,7 +139,7 @@ if(isset($_REQUEST['email']) && $_REQUEST['email']!="")
 		 
 		 $content_master_id[] = array("id"=>$id);
 		 
-		 $arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name);
+		 $arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "sync_timestamp"=>$sync_timestamp);
 	 }
     }
 	/*********************** END *******************************/
@@ -312,7 +312,7 @@ while($rowAttr = mysql_fetch_assoc($sqlAttr))
 		 
 			 $friend_content_master_id[] = array("id"=>$id);
 		 
-			 $friend_arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color);
+			 $friend_arr_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "sync_timestamp"=>$sync_timestamp);
 		 }
 	    }
 		//print_r($friend_arr_content);
@@ -344,7 +344,7 @@ while($rowAttr = mysql_fetch_assoc($sqlAttr))
 			$sql_c_mas = mysql_query("select * from ba_tbl_content where id = '$c_mas_id' and is_deleted = '0'");
 			$row_c_mas = mysql_fetch_assoc($sql_c_mas);
 			extract($row_c_mas);	
-			$arr_friend_c_mas[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>"", "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color);
+			$arr_friend_c_mas[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>"", "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "sync_timestamp"=>$sync_timestamp);
 	
 			//$arr_v_mas_id[] = array("id"=>$id);
 		}	
@@ -395,7 +395,7 @@ while($rowAttr = mysql_fetch_assoc($sqlAttr))
 		 
 			 $content_master_id[] = array("id"=>$id);
 		 
-			 $arr_update_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color);
+			 $arr_update_content[] = array("id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "industry_id"=>$industry_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "type"=>$type, "sync_status"=>$sync_status, "cloud_path"=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "sync_timestamp"=>$sync_timestamp);
 		 }
 	    }
 		/*********************** END *******************************/

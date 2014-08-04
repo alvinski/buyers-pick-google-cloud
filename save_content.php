@@ -51,8 +51,9 @@
 	{
 		$sqlSelect = mysql_query("select * from ba_tbl_content where content_name = '$content_name'");
 		$rowSelect = mysql_fetch_assoc($sqlSelect);
+		//$sync_timestamp = date("Y-d-m h:i:s");
 		extract($rowSelect);
-		$vendor_arr[] = array("old_id"=> $old_id, "id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "sync_status"=> $sync_status, "industry_id"=>$industry_id, "type"=>$type, 'cloud_path'=>$cloud_path, "storage_path"=>$storage_path, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "update"=>"No insert only Update");
+		$vendor_arr[] = array("old_id"=> $old_id, "id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "sync_status"=> $sync_status, "industry_id"=>$industry_id, "type"=>$type, 'cloud_path'=>$cloud_path, "storage_path"=>$storage_path, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "sync_timestamp"=>$sync_timestamp, "update"=>"No insert only Update");
 	
 		$arr_pass[] = array("response"=>"pass");
 		$data["error"] = $arr_pass;
@@ -137,8 +138,8 @@
 		$updated_user_space = $user_space_used + $gs_size;
 		$sqlUpdate = mysql_query("update ba_tbl_user set user_space_used = '$updated_user_space' where id = '$user_id'");
 		/********** END ***********/
-		
-		$sqlInsert = mysql_query("insert into ba_tbl_content values('$empty_id', '$content_name', '$vendor_id', '$tags', '$title', '$content_size', '$description', '$website', '$created_date', '$update_date', '$is_deleted', '$delete_date', '$path', '$sync_status', '$industry_id', '$type', '$cloud_path', '$public_url', '$update_status', '$content_color', '$display_content_name')") or die(mysql_error());
+		$sync_timestamp = date("Y-d-m h:i:s");
+		$sqlInsert = mysql_query("insert into ba_tbl_content values('$empty_id', '$content_name', '$vendor_id', '$tags', '$title', '$content_size', '$description', '$website', '$created_date', '$update_date', '$is_deleted', '$delete_date', '$path', '$sync_status', '$industry_id', '$type', '$cloud_path', '$public_url', '$update_status', '$content_color', '$display_content_name', '$sync_timestamp')") or die(mysql_error());
 		
 		/***** Checking if vendor is inserted ******/
 		$inserted_id = mysql_insert_id();
@@ -147,7 +148,7 @@
 			$sqlSelect = mysql_query("select * from ba_tbl_content where id = '$inserted_id'");
 			$rowSelect = mysql_fetch_assoc($sqlSelect);
 			extract($rowSelect);
-			$vendor_arr[] = array("old_id"=> $old_id, "id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "sync_status"=> $sync_status, "industry_id"=>$industry_id, "type"=>$type, 'cloud_path'=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name);
+			$vendor_arr[] = array("old_id"=> $old_id, "id"=>$id, "content_name"=>$content_name, "vendor_id"=>$vendor_id, "tags"=>$tags, "title"=>$title, "content_size"=>$content_size, "description"=>$description, "website"=>$website, "created_date"=>$created_date, "update_date"=>$update_date, "is_deleted"=>$is_deleted, "delete_date"=>$delete_date, "path"=>$cloud_path, "sync_status"=> $sync_status, "industry_id"=>$industry_id, "type"=>$type, 'cloud_path'=>$cloud_path, "storage_path"=>$storage_path, "update_status"=>$update_status, "content_color"=>$content_color, "display_content_name"=>$display_content_name, "sync_timestamp"=>$sync_timestamp);
 			
 			$arr_pass[] = array("response"=>"pass");
 			$data["error"] = $arr_pass;
@@ -184,5 +185,4 @@
 		//echo '[{"response":"no space"}]';
 	}
 	}
-?>}
 ?>

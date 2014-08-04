@@ -25,16 +25,18 @@ foreach($json as $key=>$values)
 		//}
 		if(mysql_affected_rows()==1)
 		{
-			$sqlSelect = mysql_query("select id, is_deleted from ba_tbl_friend_share where item_id = '$id' receiver_email = '$email'");
+			$sqlSelect = mysql_query("select id, is_deleted from ba_tbl_friend_share where item_id = '$id' and receiver_email = '$email'");
 			$rowSelect = mysql_fetch_assoc($sqlSelect);
-			$response[] = $arr_pass;
-			$arr_friendsharedel[] = array("id"=>$rowSelect["id"], "is_deleted"=>$rowSelect["is_deleted"]);
+			$_id = $rowSelect["id"];
+			$is_deleted = $rowSelect["is_deleted"];
+			$response = $arr_pass;
+			$arr_friendsharedel[] = array("id"=>$_id, "is_deleted"=>$is_deleted);
 			
 		}
 		else
 		{
-			$response[] = $arr_fail;
-			$arr_friendsharedel[] = array("response"=>"fail");
+			$response = $arr_fail;
+			$arr_friendsharedel = array("response"=>"fail");
 			
 		}
 	}
